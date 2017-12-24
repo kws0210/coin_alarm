@@ -11,29 +11,29 @@
             </thead>
             <tbody id="tb" class="flex-column flex-md-column">
                 <tr>
-                    <td id="b00">btc</td>
-                    <td id="b10"></td>
-                    <td id="b20">btc : </td>
+                    <td id="b00" style="cursor:pointer;">btc</td>
+                    <td id="b10" style="cursor:pointer;">btc</td>
+                    <td id="b20" style="cursor:pointer;">btc</td>
                 </tr>
                 <tr>
-                    <td id="b01">bch</td>
-                    <td id="b11">bch</td>
-                    <td id="b21">bch</td>
+                    <td id="b01" style="cursor:pointer;">bch</td>
+                    <td id="b11" style="cursor:pointer;">bch</td>
+                    <td id="b21" style="cursor:pointer;">bch</td>
                 </tr>
                 <tr>
-                    <td id="b02">eth</td>
-                    <td id="b12">eth</td>
-                    <td id="b22">eth</td>
+                    <td id="b02" style="cursor:pointer;">eth</td>
+                    <td id="b12" style="cursor:pointer;">eth</td>
+                    <td id="b22" style="cursor:pointer;">eth</td>
                 </tr>
                 <tr>
-                    <td id="b03">etc</td>
-                    <td id="b13">etc</td>
-                    <td id="b23">etc</td>
+                    <td id="b03" style="cursor:pointer;">etc</td>
+                    <td id="b13" style="cursor:pointer;">etc</td>
+                    <td id="b23" style="cursor:pointer;">etc</td>
                 </tr>
                 <tr>
-                    <td id="b04">xrp</td>
-                    <td id="b14">xrp</td>
-                    <td id="b24">xrp</td>
+                    <td id="b04" style="cursor:pointer;">xrp</td>
+                    <td id="b14" style="cursor:pointer;">xrp</td>
+                    <td id="b24" style="cursor:pointer;">xrp</td>
                 </tr>
                 </tr>
             </tbody>
@@ -43,11 +43,58 @@
         <center><h1><b>내가 신청한 알림</b></h1></center>
     </div>
     <script>
+        $("#b00").click(function() {
+            //alert($(this).text());
+ 
+        })
+        $("#b10").click(function(){
+
+        })
+        $("#b20").click(function(){
+
+        })
+        $("#b01").click(function(){
+
+        })
+        $("#b11").click(function(){
+
+        })
+        $("#b21").click(function(){
+
+        })
+        $("#b02").click(function(){
+
+        })
+        $("#b12").click(function(){
+
+        })
+        $("#b22").click(function(){
+
+        })
+        $("#b03").click(function(){
+
+        })
+        $("#b13").click(function(){
+
+        })
+        $("#b23").click(function(){
+
+        })
+        $("#b04").click(function(){
+
+        })
+        $("#b14").click(function(){
+
+        })
+        $("#b24").click(function(){
+
+        })
+    </script>
+    <script>
         $(document).ready(function() {
             $.ajax({
                 url: '/PHP/get_list.php',
                 success: function(result) {
-                    alert(result);
                     var jarray = jQuery.parseJSON(result);
                     var mstr = "";
                     for(var i = 0;i < 5;i++) {

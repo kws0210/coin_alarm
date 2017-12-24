@@ -1,13 +1,10 @@
 <?php
 
-    $servername = "localhost";
-	$username = "root";
-	$password = "kjw0102";
-	$dbname = "Bitcoin";
+    include_once("./dbconfig.php");
 
 	$load_videos_url = "SELECT * FROM Market ORDER BY idx ASC";
 
-	$conn = new mysqli($servername, $username, $password, $dbname);
+	$conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 	if($conn->connect_error) {
 		die("DB Connection Failed:" . $conn->connect_error);
 	}

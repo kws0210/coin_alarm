@@ -1,9 +1,6 @@
 <?php
 
-    $servername = "localhost";
-	$username = "root";
-	$password = "kjw0102";
-	$dbname = "Bitcoin";
+    include_once("./dbconfig.php");
 
     $db_sql = "CREATE DATABASE " . $dbname . " CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
@@ -30,7 +27,7 @@
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
-    $conn = new mysqli($servername, $username, $password);
+    $conn = new mysqli($dbservername, $dbusername, $dbpassword);
 
     if ($conn->connect_error) {
         die("Connection Failed : " . $conn->connect_error);

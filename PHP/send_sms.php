@@ -57,7 +57,7 @@ function send_munja($mtype, $name, $phone, $msg, $callback, $contents, $reserve=
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
- 
+
 	$name		= "GazuAlarm";
  	$market		= $_POST['market'];
  	$coin 		= $_POST['coin'];
@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
  	$select_result = mysqli_query($conn, $select_sql);
 
 	$result = mysqli_query($conn, $select_sql);
-    
+
  	while($row_phone_no = $result->fetch_assoc()) {
  		$result = send_munja($mtype, $name, $row_phone_no, $msg, $callback, $contents);
 
@@ -99,7 +99,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	echo json_encode($data);
 
  	mysqli_close($conn);
-	
 }
 
 ?>

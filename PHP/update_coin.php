@@ -9,10 +9,7 @@
 
         $jobject = json_decode(file_get_contents('php://input'), TRUE);
 
-        $dbservername = "localhost";
-	    $dbusername = "root";
-	    $dbpassword = "kjw0102";
-	    $dbname = "Bitcoin";
+        include_once("./dbconfig.php");
 
         $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
