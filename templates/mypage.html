@@ -1,0 +1,119 @@
+<div class="container row">
+    <div class="col-md-8 col-sm-6">
+        <center><h1><b>Bitcoin 알림 예약</b></h1></center>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Bithumb</th>
+                    <th scope="col">Coinone</th>
+                    <th scope="col">Korbit</th>
+                </tr>
+            </thead>
+            <tbody id="tb" class="flex-column flex-md-column">
+                <tr>
+                    <td id="b00">btc</td>
+                    <td id="b10"></td>
+                    <td id="b20">btc : </td>
+                </tr>
+                <tr>
+                    <td id="b01">bch</td>
+                    <td id="b11">bch</td>
+                    <td id="b21">bch</td>
+                </tr>
+                <tr>
+                    <td id="b02">eth</td>
+                    <td id="b12">eth</td>
+                    <td id="b22">eth</td>
+                </tr>
+                <tr>
+                    <td id="b03">etc</td>
+                    <td id="b13">etc</td>
+                    <td id="b23">etc</td>
+                </tr>
+                <tr>
+                    <td id="b04">xrp</td>
+                    <td id="b14">xrp</td>
+                    <td id="b24">xrp</td>
+                </tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <center><h1><b>내가 신청한 알림</b></h1></center>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/PHP/get_list.php',
+                success: function(result) {
+                    var jarray = jQuery.parseJSON(result);
+                    var mstr = "";
+                    for(var i = 0;i < 5;i++) {
+                        switch(i) {
+                            case 0:
+                                mstr = "btc : ";
+                                break;
+                            case 1:
+                                mstr = "bch : ";
+                                break;
+                            case 2:
+                                mstr = "eth : ";
+                                break;
+                            case 3:
+                                mstr = "etc : ";
+                                break;
+                            case 4:
+                                mstr = "xrp : ";
+                                break;
+                            default:
+                                mstr = "";
+                        }
+                        $("#b0" + i).text(mstr + jarray[0][i]['price']);
+                        $("#b1" + i).text(mstr + jarray[1][i]['price']);
+                        $("#b2" + i).text(mstr + jarray[2][i]['price']);
+                    }
+                },
+                error: function(error) {
+                    alert("error");
+                }
+            });
+            var timer = setInterval(function() {
+            $.ajax({
+                url: '/PHP/get_list.php',
+                success: function(result) {
+                    var jarray = jQuery.parseJSON(result);
+                    var mstr = "";
+                    for(var i = 0;i < 5;i++) {
+                        switch(i) {
+                            case 0:
+                                mstr = "btc : ";
+                                break;
+                            case 1:
+                                mstr = "bch : ";
+                                break;
+                            case 2:
+                                mstr = "eth : ";
+                                break;
+                            case 3:
+                                mstr = "etc : ";
+                                break;
+                            case 4:
+                                mstr = "xrp : ";
+                                break;
+                            default:
+                                mstr = "";
+                        }
+                        $("#b0" + i).text(mstr + jarray[0][i]['price']);
+                        $("#b1" + i).text(mstr + jarray[1][i]['price']);
+                        $("#b2" + i).text(mstr + jarray[2][i]['price']);
+                    }
+                },
+                error: function(error) {
+                    alert("error");
+                }
+            });
+            }, 5000);
+        });
+    </script>
+</div>
