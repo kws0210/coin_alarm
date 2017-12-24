@@ -1,9 +1,8 @@
 <?php
+
+    include_once("./dbconfig.php");
+
 	$drop_database_sql = "DROP DATABASE Bitcoin;";
-	$servername = "localhost";
-	$username = "root";
-	$password = "kjw0102";
-	$dbname = "Bitcoin";
 
 	//Open Connection
 	$conn = new mysqli($servername, $username, $password);
