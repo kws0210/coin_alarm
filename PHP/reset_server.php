@@ -1,6 +1,9 @@
 <?php
 
-    include_once("./dbconfig.php");
+    $servername = "localhost";
+	$username = "root";
+	$password = "kjw0102";
+	$dbname = "Bitcoin";
 
 	$drop_database_sql = "DROP DATABASE Bitcoin;";
 

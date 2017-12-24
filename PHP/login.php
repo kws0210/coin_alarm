@@ -6,7 +6,10 @@
 	$pw = $_POST['password'];
 	$user_id_sql = "SELECT * FROM USER WHERE user_id='$id' AND user_pw=MD5('$pw');";
 
-    include_once('./dbconfig.php');
+    $dbservername = "localhost";
+	$dbusername = "root";
+	$dbpassword = "kjw0102";
+	$dbname = "Bitcoin";
 
 	$conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 

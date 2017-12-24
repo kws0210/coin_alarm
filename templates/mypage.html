@@ -47,6 +47,7 @@
             $.ajax({
                 url: '/PHP/get_list.php',
                 success: function(result) {
+                    alert(result);
                     var jarray = jQuery.parseJSON(result);
                     var mstr = "";
                     for(var i = 0;i < 5;i++) {

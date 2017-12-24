@@ -1,6 +1,9 @@
 <?php
 
-    include_once("./dbconfig.php");
+    $servername = "localhost";
+	$username = "root";
+	$password = "kjw0102";
+	$dbname = "Bitcoin";
 
 	$load_videos_url = "SELECT * FROM Market ORDER BY idx ASC";
 

@@ -1,6 +1,9 @@
 <?php
 
-    include_once("./dbconfig.php");
+    $servername = "localhost";
+	$username = "root";
+	$password = "kjw0102";
+	$dbname = "Bitcoin";
 
     $db_sql = "CREATE DATABASE " . $dbname . " CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
