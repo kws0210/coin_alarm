@@ -59,38 +59,36 @@ function send_munja($mtype, $name, $phone, $msg, $callback, $contents, $reserve=
 if($_SERVER['REQUEST_METHOD']=='POST'){
 
 	$name		= "GazuAlarm";
- 	$market		= $_POST['market'];
- 	$coin 		= $_POST['coin'];
- 	$price		= $_POST['price'];
- 	$bound		= $_POST['bound'];
 	$msg;
 	$callback 	= "01040200630";
 
+    $jobject = json_decode(file_get_contents('php://input'), TRUE);
 
 	$conn = mysqli_connect('localhost','root','kjw0102','Bitcoin');
 
- 	$select_sql = "SELECT u.user_phone FROM USER u INNER JOIN Alarm a ON u.idx = a.user_idx WHERE a.market ='$market' AND a.coin = '$coin' AND a.price";
-
- 	if($callback == '0') {
-		$msg = $price." 이하 도달";
-		$select_sql .= " < '$price'";
-	} else {
-		$msg = $price." 이상 도달";
-		$select_sql = $select_sql." > '$price'";
-	}
-
- 	$select_result = mysqli_query($conn, $select_sql);
+ 	$select_sql = "SELECT u.user_phone, a.idx FROM USER u INNER JOIN Alarm a ON u.idx = a.user_idx WHERE 
+ 	(a.market_idx = '".($jobject['market']  * 5 + $jobject['coin'])."' AND a.price <= '".$jobject['price']."' AND a.bound = '1') OR
+ 	(a.market_idx = '".($jobject['market']  * 5 + $jobject['coin'])."' AND a.price >= '".$jobject['price']."' AND a.bound = '0')";
+	$msg = "[".$name."]\n\n목표가 도달 : ".$jobject['price'];
 
 	$result = mysqli_query($conn, $select_sql);
 
  	while($row_phone_no = $result->fetch_assoc()) {
- 		$result = send_munja($mtype, $name, $row_phone_no, $msg, $callback, $contents);
 
-		$tok = strtok($result, '|');
+ 		$r = send_munja($mtype, $name, str_ireplace("-", "", $row_phone_no['user_phone']), $msg, $callback, $contents);
+
+		$tok = strtok($r, '|');
 		if($tok == '0000') {
-			$data = array(
+			$deleteAlarmSql = "DELETE FROM Alarm WHERE idx = ".$row_phone_no['idx'];
+
+    		if ($conn->query($deleteAlarmSql) === TRUE) {
+        		$data = array(
  				'resultCd'=>'1',
  				'alertMsg'=>'문자 전송 완료');
+    		} else {
+        		$data = array('resultCd'=>'4');
+    		}
+
 		} else {
 			$data = array('resultCd'=>'4');
 		}

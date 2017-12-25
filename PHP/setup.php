@@ -23,6 +23,7 @@
         idx int NOT NULL AUTO_INCREMENT PRIMARY KEY,
         user_idx int NOT NULL,
         market_idx int NOT NULL,
+        price int NOT NULL,
         bound tinyint NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
@@ -46,7 +47,7 @@
     //Close Connection with Database
     $conn->close();
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
     //Create User Table
     echo "<p>";

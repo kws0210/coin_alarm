@@ -1,7 +1,7 @@
 <div class="container row">
     <div class="col-md-8 col-sm-6">
-        <center><h1><b>Bitcoin 알림 예약</b></h1></center>
-        <table class="table">
+        <center><h1><b style="white-space:nowrap; font-size: 1em;">Bitcoin 알림 예약</b></h1></center>
+        <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Bithumb</th>
@@ -11,83 +11,388 @@
             </thead>
             <tbody id="tb" class="flex-column flex-md-column">
                 <tr>
-                    <td id="b00" style="cursor:pointer;">btc</td>
-                    <td id="b10" style="cursor:pointer;">btc</td>
-                    <td id="b20" style="cursor:pointer;">btc</td>
+                    <td id="b00" style="cursor:pointer;">BTC</td>
+                    <td id="b10" style="cursor:pointer;">BTC</td>
+                    <td id="b20" style="cursor:pointer;">BTC</td>
                 </tr>
                 <tr>
-                    <td id="b01" style="cursor:pointer;">bch</td>
-                    <td id="b11" style="cursor:pointer;">bch</td>
-                    <td id="b21" style="cursor:pointer;">bch</td>
+                    <td id="b01" style="cursor:pointer;">BCH</td>
+                    <td id="b11" style="cursor:pointer;">BCH</td>
+                    <td id="b21" style="cursor:pointer;">BCH</td>
                 </tr>
                 <tr>
-                    <td id="b02" style="cursor:pointer;">eth</td>
-                    <td id="b12" style="cursor:pointer;">eth</td>
-                    <td id="b22" style="cursor:pointer;">eth</td>
+                    <td id="b02" style="cursor:pointer;">ETH</td>
+                    <td id="b12" style="cursor:pointer;">ETH</td>
+                    <td id="b22" style="cursor:pointer;">ETH</td>
                 </tr>
                 <tr>
-                    <td id="b03" style="cursor:pointer;">etc</td>
-                    <td id="b13" style="cursor:pointer;">etc</td>
-                    <td id="b23" style="cursor:pointer;">etc</td>
+                    <td id="b03" style="cursor:pointer;">ETC</td>
+                    <td id="b13" style="cursor:pointer;">ETC</td>
+                    <td id="b23" style="cursor:pointer;">ETC</td>
                 </tr>
                 <tr>
-                    <td id="b04" style="cursor:pointer;">xrp</td>
-                    <td id="b14" style="cursor:pointer;">xrp</td>
-                    <td id="b24" style="cursor:pointer;">xrp</td>
+                    <td id="b04" style="cursor:pointer;">XRP</td>
+                    <td id="b14" style="cursor:pointer;">XRP</td>
+                    <td id="b24" style="cursor:pointer;">XRP</td>
                 </tr>
                 </tr>
             </tbody>
         </table>
+        <div id="reserve" class="card">
+            <div class='card-body'>
+                <div class='container row'>
+                    <h3 id="r-market" class='col-md-6 col-sm-12' style="white-space: nowrap; font-size: 1em;">거래소 : 한강</h3>
+                    <h3 id="r-coin" class='col-md-6 col-sm-12' style="white-space: nowrap; font-size: 1em;">코인 종류 : 가즈아</h3>
+                </div>
+                <div class='row mt-3 container'>
+                    <div class='w-100 row'>
+                        <div class='form-group col-md-6 col-sm-12'>
+                            <input type='number' name='price' class='form-control' value='0' />
+                        </div>
+                        <div class='form-group col-md-3 col-sm-12'>
+                            <button id='btn-bound' type='button' class='btn btn-dark btn-block'>상한</button>
+                        </div>
+                        <div class='form-group col-md-3 col-sm-12'>
+                            <input type='submit' id="r-submit" class='btn btn-success save btn-block' value='등록하기' />
+                        </div>
+                        <input type='hidden' name='market' value='0' />
+                        <input type='hidden' name='coin' value='0' value='0' />
+                        <input type='hidden' name='bound' id='bound' value='1' />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-4 col-sm-6">
-        <center><h1><b>내가 신청한 알림</b></h1></center>
+        <center><h1><b style="white-space: nowrap; font-size: 1em;">내가 신청한 알림</b></h1></center>
+        <div id="alarmlist" class="container" style="overflow: scroll; height: 500px;"></div>
     </div>
     <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: "POST",
+                url: "/PHP/get_alarms.php",
+                success: function(result) {
+                    var jarray = jQuery.parseJSON(result);
+                    $("#alarmlist").empty();
+                    for(var i = 0;i < jarray.length;i++) {
+                        var r_market = "";
+                        var r_coin = "";
+                        switch(jarray[i]['market']) {
+                            case "0":
+                                r_market = "Bithumb";
+                                r_coin = "BTC";
+                                break;
+                            case "1":
+                                r_market = "Bithumb";
+                                r_coin = "BCH";
+                                break;
+                            case "2":
+                                r_market = "Bithumb";
+                                r_coin = "ETH";
+                                break;
+                            case "3":
+                                r_market = "Bithumb";
+                                r_coin = "ETC";
+                                break;
+                            case "4":
+                                r_market = "Bithumb";
+                                r_coin = "XRP";
+                                break;
+                            case "5":
+                                r_market = "Coinone";
+                                r_coin = "BTC";
+                                break;
+                            case "6":
+                                r_market = "Coinone";
+                                r_coin = "BCH";
+                                break;
+                            case "7":
+                                r_market = "Coinone";
+                                r_coin = "ETH";
+                                break;
+                            case "8":
+                                r_market = "Coinone";
+                                r_coin = "ETC";
+                                break;
+                            case "9":
+                                r_market = "Coinone";
+                                r_coin = "XRP";
+                                break;
+                            case "10":
+                                r_market = "Korbit";
+                                r_coin = "BTC";
+                                break;
+                            case "11":
+                                r_market = "Korbit";
+                                r_coin = "BCH";
+                                break;
+                            case "12":
+                                r_market = "Korbit";
+                                r_coin = "ETH";
+                                break;
+                            case "13":
+                                r_market = "Korbit";
+                                r_coin = "ETC";
+                                break;
+                            case "14":
+                                r_market = "Korbit";
+                                r_coin = "XRP";
+                                break;
+                            default:
+                                r_market = "";
+                                r_coin = "";
+                        }
+                        var bstr = "";
+                        if(jarray[i]['bound'] == "0") bstr = "하한";
+                        else bstr = "상한";
+                        $("#alarmlist").append("<div id='card" + i + "' class='card my-3'><div class='card-body'><h2 class='card-title'>" + r_market + "</h2><div class='row container'><h4 class='card-text'>" + r_coin + "</h4><h4 class='card-text'>" + bstr + "</h4><h4 class='card-text'>" + jarray[i]['price'] + "</h4></div><div class='row container'><button value=" + jarray[i]['idx'] + " class='btn btn-danger btn-block mt-3' id='btn-delete" + i + "'>DELETE</button></div></div></div></div>");
+                    $("#btn-delete" + i).click(function(e) {
+                       var c = confirm("삭제하시겠어요? 한강 가즈아~");
+                        if(!c) return;
+                        $.ajax({
+                            url: "/PHP/delete_alarm.php",
+                            type: "POST",
+                            data: {
+                                pk: $(this).val(),
+                            },
+                            success: function(result) {
+                                $(e.target).parent().parent().parent().remove();
+                                alert(result);
+                            }
+                        })
+                        });
+                    }
+                }
+            })
+        });
+    </script>
+    <script>
+        $("#btn-bound").click(function() {
+            if($("#bound").val() == '0') {
+                $(this).text('상한');
+                $("#bound").val('1');
+            }else{
+                $(this).text('하한');
+                $("#bound").val('0');
+            }
+        });
+        $("#r-submit").click(function() {
+            if(!$("input[name=price]").val().length) $("input[name=price]").val('0');
+            $.ajax({
+                type: 'POST',
+                url: "/PHP/new_reserve.php",
+                data: {
+                    market : $("input[name=market]").val(),
+                    coin : $("input[name=coin]").val(),
+                    price : $("input[name=price]").val(),
+                    bound : $("input[name=bound]").val(),
+                },
+                success: function(result) {
+                    alert(result);
+                    $.ajax({
+                type: "POST",
+                url: "/PHP/get_alarms.php",
+                success: function(result) {
+                    var jarray = jQuery.parseJSON(result);
+                    $("#alarmlist").empty();
+                    for(var i = 0;i < jarray.length;i++) {
+                        var r_market = "";
+                        var r_coin = "";
+                        switch(jarray[i]['market']) {
+                            case "0":
+                                r_market = "Bithumb";
+                                r_coin = "BTC";
+                                break;
+                            case "1":
+                                r_market = "Bithumb";
+                                r_coin = "BCH";
+                                break;
+                            case "2":
+                                r_market = "Bithumb";
+                                r_coin = "ETH";
+                                break;
+                            case "3":
+                                r_market = "Bithumb";
+                                r_coin = "ETC";
+                                break;
+                            case "4":
+                                r_market = "Bithumb";
+                                r_coin = "XRP";
+                                break;
+                            case "5":
+                                r_market = "Coinone";
+                                r_coin = "BTC";
+                                break;
+                            case "6":
+                                r_market = "Coinone";
+                                r_coin = "BCH";
+                                break;
+                            case "7":
+                                r_market = "Coinone";
+                                r_coin = "ETH";
+                                break;
+                            case "8":
+                                r_market = "Coinone";
+                                r_coin = "ETC";
+                                break;
+                            case "9":
+                                r_market = "Coinone";
+                                r_coin = "XRP";
+                                break;
+                            case "10":
+                                r_market = "Korbit";
+                                r_coin = "BTC";
+                                break;
+                            case "11":
+                                r_market = "Korbit";
+                                r_coin = "BCH";
+                                break;
+                            case "12":
+                                r_market = "Korbit";
+                                r_coin = "ETH";
+                                break;
+                            case "13":
+                                r_market = "Korbit";
+                                r_coin = "ETC";
+                                break;
+                            case "14":
+                                r_market = "Korbit";
+                                r_coin = "XRP";
+                                break;
+                            default:
+                                r_market = "";
+                                r_coin = "";
+                        }
+                        var bstr = "";
+                        if(jarray[i]['bound'] == "0") bstr = "하한";
+                        else bstr = "상한";
+                    $("#alarmlist").append("<div id='card" + i + "' class='card my-3'><div class='card-body'><h2 class='card-title'>" + r_market + "</h2><div class='row container'><h4 class='card-text'>" + r_coin + "</h4><h4 class='card-text'>" + bstr + "</h4><h4 class='card-text'>" + jarray[i]['price'] + "</h4></div><div class='row container'><button value=" + jarray[i]['idx'] + " class='btn btn-danger btn-block mt-3' id='btn-delete" + i + "'>DELETE</button></div></div></div></div>");
+                    $("#btn-delete" + i).click(function(e) {
+                        var c = confirm("삭제하시겠어요? 한강 가즈아~");
+                        if(!c) return;
+                        $.ajax({
+                            url: "/PHP/delete_alarm.php",
+                            type: "POST",
+                            data: {
+                                pk: $(this).val(),
+                            },
+                            success: function(result) {
+                                $(e.target).parent().parent().parent().remove();
+                                alert(result);
+                            }
+                        })
+                        });
+                    }
+                }
+            })
+                }
+            });
+        });
+    </script>
+    <script>
         $("#b00").click(function() {
-            //alert($(this).text());
- 
+            $("#r-market").text("거래소 : Bithumb");
+            $("#r-coin").text("Coin 종류 : btc");
+            $("input[name=market]").val('0');
+            $("input[name=coin]").val('0');
         })
         $("#b10").click(function(){
+            $("#r-market").text("거래소 : Coinone");
+            $("#r-coin").text("Coin 종류 : btc");
+            $("input[name=market]").val('1');
+            $("input[name=coin]").val('0');
 
         })
         $("#b20").click(function(){
+            $("#r-market").text("거래소 : Korbit");
+            $("#r-coin").text("Coin 종류 : btc");
+            $("input[name=market]").val('2');
+            $("input[name=coin]").val('0');
 
         })
         $("#b01").click(function(){
+            $("#r-market").text("거래소 : Bithumb");
+            $("#r-coin").text("Coin 종류 : bch");
+            $("input[name=market]").val('0');
+            $("input[name=coin]").val('1');
 
         })
         $("#b11").click(function(){
+            $("#r-market").text("거래소 : Coinone");
+            $("#r-coin").text("Coin 종류 : bch");
+            $("input[name=market]").val('1');
+            $("input[name=coin]").val('1');
 
         })
         $("#b21").click(function(){
+            $("#r-market").text("거래소 : Korbit");
+            $("#r-coin").text("Coin 종류 : bch");
+            $("input[name=market]").val('2');
+            $("input[name=coin]").val('1');
 
         })
         $("#b02").click(function(){
+            $("#r-market").text("거래소 : Bithumb");
+            $("#r-coin").text("Coin 종류 : etc");
+            $("input[name=market]").val('0');
+            $("input[name=coin]").val('2');
 
         })
         $("#b12").click(function(){
+            $("#r-market").text("거래소 : Coinone");
+            $("#r-coin").text("Coin 종류 : eth");
+            $("input[name=market]").val('1');
+            $("input[name=coin]").val('2');
 
         })
         $("#b22").click(function(){
+            $("#r-market").text("거래소 : Korbit");
+            $("#r-coin").text("Coin 종류 : eth");
+            $("input[name=market]").val('2');
+            $("input[name=coin]").val('2');
 
         })
         $("#b03").click(function(){
+            $("#r-market").text("거래소 : Bithumb");
+            $("#r-coin").text("Coin 종류 : etc");
+            $("input[name=market]").val('0');
+            $("input[name=coin]").val('3');
 
         })
         $("#b13").click(function(){
+            $("#r-market").text("거래소 : Coinone");
+            $("#r-coin").text("Coin 종류 : etc");
+            $("input[name=market]").val('1');
+            $("input[name=coin]").val('3');
 
         })
         $("#b23").click(function(){
+            $("#r-market").text("거래소 : Korbit");
+            $("#r-coin").text("Coin 종류 : etc");
+            $("input[name=market]").val('2');
+            $("input[name=coin]").val('3');
 
         })
         $("#b04").click(function(){
+            $("#r-market").text("거래소 : Bithumb");
+            $("#r-coin").text("Coin 종류 : xrp");
+            $("input[name=market]").val('0');
+            $("input[name=coin]").val('4');
 
         })
         $("#b14").click(function(){
+            $("#r-market").text("거래소 : Coinone");
+            $("#r-coin").text("Coin 종류 : xrp");
+            $("input[name=market]").val('1');
+            $("input[name=coin]").val('4');
 
         })
         $("#b24").click(function(){
-
+            $("#r-market").text("거래소 : Korbit");
+            $("#r-coin").text("Coin 종류 : xrp");
+            $("input[name=market]").val('2');
+            $("input[name=coin]").val('4');
         })
     </script>
     <script>
@@ -159,6 +464,102 @@
                 },
                 error: function(error) {
                     alert("error");
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "/PHP/get_alarms.php",
+                success: function(result) {
+                    var jarray = jQuery.parseJSON(result);
+                    $("#alarmlist").empty();
+                    for(var i = 0;i < jarray.length;i++) {
+                        var r_market = "";
+                        var r_coin = "";
+                        switch(jarray[i]['market']) {
+                            case "0":
+                                r_market = "Bithumb";
+                                r_coin = "BTC";
+                                break;
+                            case "1":
+                                r_market = "Bithumb";
+                                r_coin = "BCH";
+                                break;
+                            case "2":
+                                r_market = "Bithumb";
+                                r_coin = "ETH";
+                                break;
+                            case "3":
+                                r_market = "Bithumb";
+                                r_coin = "ETC";
+                                break;
+                            case "4":
+                                r_market = "Bithumb";
+                                r_coin = "XRP";
+                                break;
+                            case "5":
+                                r_market = "Coinone";
+                                r_coin = "BTC";
+                                break;
+                            case "6":
+                                r_market = "Coinone";
+                                r_coin = "BCH";
+                                break;
+                            case "7":
+                                r_market = "Coinone";
+                                r_coin = "ETH";
+                                break;
+                            case "8":
+                                r_market = "Coinone";
+                                r_coin = "ETC";
+                                break;
+                            case "9":
+                                r_market = "Coinone";
+                                r_coin = "XRP";
+                                break;
+                            case "10":
+                                r_market = "Korbit";
+                                r_coin = "BTC";
+                                break;
+                            case "11":
+                                r_market = "Korbit";
+                                r_coin = "BCH";
+                                break;
+                            case "12":
+                                r_market = "Korbit";
+                                r_coin = "ETH";
+                                break;
+                            case "13":
+                                r_market = "Korbit";
+                                r_coin = "ETC";
+                                break;
+                            case "14":
+                                r_market = "Korbit";
+                                r_coin = "XRP";
+                                break;
+                            default:
+                                r_market = "";
+                                r_coin = "";
+                        }
+                        var bstr = "";
+                        if(jarray[i]['bound'] == "0") bstr = "하한";
+                        else bstr = "상한";
+                        $("#alarmlist").append("<div id='card" + i + "' class='card my-3'><div class='card-body'><h2 class='card-title'>" + r_market + "</h2><div class='row container'><h4 class='card-text'>" + r_coin + "</h4><h4 class='card-text'>" + bstr + "</h4><h4 class='card-text'>" + jarray[i]['price'] + "</h4></div><div class='row container'><button value=" + jarray[i]['idx'] + " class='btn btn-danger btn-block mt-3' id='btn-delete" + i + "'>DELETE</button></div></div></div></div>");
+                    $("#btn-delete" + i).click(function(e) {
+                       var c = confirm("삭제하시겠어요? 한강 가즈아~");
+                        if(!c) return;
+                        $.ajax({
+                            url: "/PHP/delete_alarm.php",
+                            type: "POST",
+                            data: {
+                                pk: $(this).val(),
+                            },
+                            success: function(result) {
+                                $(e.target).parent().parent().parent().remove();
+                                alert(result);
+                            }
+                        })
+                        });
+                    }
                 }
             });
             }, 5000);
